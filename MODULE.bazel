@@ -1,0 +1,15 @@
+module(
+    name = "tensorrt",
+    version = "1.0",
+)
+
+bazel_dep(name = "rules_cuda")
+
+git_override(module_name = "rules_cuda", remote = "https://github.com/bazel-contrib/rules_cuda.git", commit = "1a2ec3d1ffacf3c462b69c2bbac91111d1752d21")
+
+cuda = use_extension("@rules_cuda//cuda:extensions.bzl", "toolchain")
+cuda.local_toolchain(
+    name = "local_cuda",
+    toolkit_path = "",
+)
+use_repo(cuda, "local_cuda")
